@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+<ui:composition template="/templates/interna.xhtml">
+	<ui:define name="titulo">
+   <h2>#{pacienteBean.editando?'Editando paciente':'Novo paciente'}</h2>
+        </ui:define>
+	<ui:define name="corpo">
+
+		<h:form id="cadastro">
+		 
+			<h:messages />
+			<h:inputHidden value="#{pacienteBean.paciente.codigo}" />
+			<h:inputHidden value="#{pacienteBean.destinoSalvarPaciente}" />
+ 
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Nome:" for="nome" />
+				<p:inputText id="nome" label="Nome"
+					value="#{pacienteBean.paciente.nome}" size="30" maxlength="30"
+					required="true" requiredMessage="Você não tem nome?">
+					<f:validateLength minimum="10" maximum="30" />
+				</p:inputText>
+
+				<p:outputLabel value="Data Nascimento:" for="data" />
+				<p:calendar id="data" value="#{pacienteBean.paciente.nascimento}"
+					size="10" maxlength="10" required="true" locale="de"
+					navigator="true" pattern="dd/mm/yyyy">
+					<f:convertDateTime dateStyle="medium" />
+				</p:calendar>
+
+
+				<p:outputLabel value="Celular:" for="celular" />
+				<p:inputText id="celular" label="Celular"
+					value="#{pacienteBean.paciente.celular}" size="10" />
+
+				<p:outputLabel value="Endereço:" for="endereco" />
+				<p:inputText id="endereco" label="Endereço"
+					value="#{pacienteBean.paciente.endereco}" size="50" maxlength="50" />
+				<p:outputLabel value="Altura:" for="altura" />
+				<p:inputText id="altura" label="Altura"
+					value="#{pacienteBean.paciente.altura}" size="4" maxlength="4"
+					required="true" requiredMessage="Você não possue altura?">
+					<f:validateLength minimum="3" maximum="4" />
+				</p:inputText>
+
+				<p:outputLabel value="peso:" for="peso" />
+				<p:inputText id="peso" label="Peso"
+					value="#{pacienteBean.paciente.peso}" size="4" maxlength="4"
+					required="true" requiredMessage="Informe seu peso?">
+					<f:validateLength minimum="4" maximum="4" />
+				</p:inputText>
+				<p:outputLabel value="IMC:" for="imc" />
+				<p:inputText id="imc" label="IMC"
+					value="#{pacienteBean.paciente.imc}" size="5"/>
+				
+
+				<p:outputLabel value="Idioma:" for="idioma" />
+				<p:selectOneMenu id="idioma" value="#{pacienteBean.paciente.idioma}">
+					<f:selectItem itemValue="pt_BR" itemLabel="Português" />
+					<f:selectItem itemValue="en_US" itemLabel="English" />
+					<f:selectItem itemValue="es_ES" itemLabel="Espanol" />
+				</p:selectOneMenu>
+				
+				<h:commandButton action="#{pacienteBean.salvar}" value="Salvar"
+					update="cadastro" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

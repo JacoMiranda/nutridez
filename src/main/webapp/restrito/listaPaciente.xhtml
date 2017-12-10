@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+<ui:composition template="/templates/interna.xhtml">
+	<ui:define name="titulo">
+     Lista de Pacientes
+     </ui:define>
+	<ui:define name="corpo">
+	<h:form>
+			<h:messages />
+			<h:dataTable value="#{pacienteBean.lista}" var="paciente"
+				rules="rows" cellpadding="5">
+				<f:facet name="caption"> 
+				A listagem a seguir exibe a relação de todos os pacientes do sistema. Você poderá realizar ativação e desativação, edição e exclusão para os usuários.
+			</f:facet>
+				<f:facet name="header">Listagem de Pacientes</f:facet>
+				<f:facet name="footer">Final da listagem</f:facet>
+				<h:column>
+					<h:commandLink action="#{pacienteBean.ativar}">
+						<h:graphicImage library="imagens"
+							name="usuario_ativo_#{paciente.ativo}.png" style="border:0" />
+						<f:setPropertyActionListener target="#{pacienteBean.paciente}"
+							value="#{paciente}" />
+					</h:commandLink>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Código</f:facet>
+				#{paciente.codigo}
+			</h:column>
+				<h:column>
+					<h:graphicImage library="imagens"
+						name="bandeira_#{paciente.idioma}.png" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+			#{paciente.nome}
+		</h:column>
+				<h:column>
+					<f:facet name="header">e-Mail</f:facet>
+					<a href="mailto:#{paciente.email}">#{paciente.email}</a>
+				</h:column>
+				<h:column>
+					<h:commandLink action="#{pacienteBean.editar}">
+						<h:graphicImage library="imagens" name="editar16.png"
+							style="border:0" />
+						<f:setPropertyActionListener target="#{pacienteBean.paciente}"
+							value="#{paciente}" />
+						<f:setPropertyActionListener
+							target="#{pacienteBean.destinoSalvarPaciente}"
+							value="/restrito/listapaciente" />
+					</h:commandLink>
+				</h:column>
+				<h:column>
+					<h:commandLink action="#{pacienteBean.excluir}"
+						onclick="if (!confirm('Confirma a exclusão do usuário #{paciente.nome}?')) return false;">
+						<h:graphicImage library="imagens" name="excluir16.png"
+							style="border:0" />
+						<f:setPropertyActionListener target="#{pacienteBean.paciente}"
+							value="#{paciente}" />
+					</h:commandLink>
+				</h:column>
+
+			</h:dataTable>
+			<a
+				onclick="document.location='#{request.contextPath}/j_spring_security_logout'"
+				title="Sair"> <h:graphicImage library="imagens"
+					name="logout16.png" />
+			</a>
+			<h:commandLink action="#{pacienteBean.novo}">Novo Paciente</h:commandLink>
+			
+			<br />
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+
+</html>
